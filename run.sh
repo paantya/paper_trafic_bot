@@ -1,6 +1,6 @@
 docker stop $(basename $(pwd))
 docker rm $(basename $(pwd))
-docker run --restart always -v $(pwd):/app --name $(basename $(pwd)) \
+docker run -v $(pwd):/app --name $(basename $(pwd)) \
           -e PAPERPAPER__USERNAME="$PAPERPAPER__USERNAME" \
          -e PAPERPAPER__PASSWORD="$PAPERPAPER__PASSWORD" \
          -e PAPERPAPER__USER_ID="$PAPERPAPER__USER_ID" \
