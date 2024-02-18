@@ -12,7 +12,7 @@ password = os.getenv('PAPERPAPER__PASSWORD')
 user_id = os.getenv('PAPERPAPER__USER_ID')
 
 
-def days_until_next_17th(current_date):
+def days_until_next_17th():
     # Текущая дата
     current_date = datetime.now()
 
