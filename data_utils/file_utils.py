@@ -1,4 +1,5 @@
 import json
+import os
 
 
 def load_file(file_path):
@@ -18,7 +19,7 @@ def load_file(file_path):
 
 def save_file(data, file_path):
     """
-    Сохраняет данные в JSON-файл с форматированием.
+    Сохраняет данные в JSON-файл с форматированием. Создает необходимые директории, если они отсутствуют.
 
     Args:
         data (dict): Данные для сохранения в файл.
@@ -27,5 +28,9 @@ def save_file(data, file_path):
     Returns:
         None
     """
+    # Создание директорий в пути, если они отсутствуют
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    # Сохранение данных в файл
     with open(file_path, 'w') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
