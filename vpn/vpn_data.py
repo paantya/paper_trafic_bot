@@ -12,6 +12,33 @@ password = os.getenv('PAPERPAPER__PASSWORD')
 user_id = os.getenv('PAPERPAPER__USER_ID')
 
 
+import datetime
+
+def days_until_next_17th(current_date):
+    # Текущая дата
+    current_date = datetime.datetime.now()
+
+    # Получаем текущий месяц и год
+    current_month = current_date.month
+    current_year = current_date.year
+
+    # Находим дату следующего 17 числа
+    next_17th = datetime.datetime(current_year, current_month, 17)
+
+    # Если текущая дата находится после 17 числа текущего месяца,
+    # то прибавляем один месяц к месяцу следующей 17 числа
+    if current_date.day >= 17:
+        next_17th = next_17th.replace(month=current_month + 1)
+        # Проверяем, что новый месяц не выходит за пределы года
+        if next_17th.month > 12:
+            next_17th = next_17th.replace(year=current_year + 1)
+
+    # Рассчитываем разницу в днях между текущей датой и следующим 17 числом
+    days_until_next_17th = (next_17th - current_date).days
+
+    return days_until_next_17th
+
+
 def get_paper_vpn_data():
     """
     Аутентифицирует пользователя и получает данные о VPN трафике.

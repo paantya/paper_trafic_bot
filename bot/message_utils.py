@@ -7,6 +7,7 @@ import telebot
 import pytz
 
 from data_utils.file_utils import save_file, load_file
+from vpn.vpn_data import days_until_next_17th
 
 TOKEN = os.getenv('PAPERPAPER__TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TOKEN, parse_mode='MARKDOWN')
@@ -88,14 +89,20 @@ def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=100
         profile_data_data: Данные о трафике.
         base_traffic: Базовое значение трафика для расчета.
     """
-    datetime_now = datetime.now().astimezone(pytz.timezone('Europe/Moscow'))
-    text = (f"Осталось месячного трафика VPN, по состоянию на `{datetime_now.strftime('%H:%M:%S %Y-%m-%d')}` по Москве:"
-            f"\nmessage: `{profile_data_message}`,\ndata: `{profile_data_data}`.\n\nТрафик обнуляется 17 числа каждого месяца.")
-
     if 'amount' in profile_data_data and profile_data_data['amount']:
+        amount = int(profile_data_data['amount'])
         text_markup = f"{(int(profile_data_data['amount']) / base_traffic * 1000)/10} [%] ({int(profile_data_data['amount'])} ГБ)"
     else:
+        amount = -1
         text_markup = f"? [%]"
+
+
+    days_until_next_17th_value = days_until_next_17th()
+
+    datetime_now = datetime.now().astimezone(pytz.timezone('Europe/Moscow'))
+    text = (f"Осталось месячного трафика VPN, по состоянию на `{datetime_now.strftime('%H:%M:%S %Y-%m-%d')}` по Москве:"
+            f"\nmessage: `{profile_data_message}`,\ndata: `{profile_data_data}`.\n\nСредний оставшийся трафик до обнуления: {amount/(days_until_next_17th_value+1):.2f} ГБ/день\nДо обнуления трафика осталось {days_until_next_17th_value+1} дней.")
+
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(telebot.types.InlineKeyboardButton(text=text_markup, url='https://t.me/ProSkidkuru'))
 
