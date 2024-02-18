@@ -8,6 +8,9 @@ from data_utils.file_utils import save_file
 username = os.getenv('PAPERPAPER__USERNAME')
 password = os.getenv('PAPERPAPER__PASSWORD')
 user_id = os.getenv('PAPERPAPER__USER_ID')
+print(f"username: {username}")
+print(f"password: {password}")
+print(f"user_id: {user_id}")
 
 
 def get_paper_vpn_data():
