@@ -17,8 +17,8 @@
 <br/>
 <br/>
 
-- Create a chat in Telegram and get its `chat_id`.
-- Создайте чат в Telegram и получите его `chat_id`.
+- Create a chat in Telegram and get its `chat_id` (with https://t.me/username_to_id_bot).
+- Создайте чат в Telegram и получите его `chat_id` (с помощью https://t.me/username_to_id_bot).
 <br/>
 <br/>
  
