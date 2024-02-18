@@ -33,7 +33,7 @@ def get_paper_vpn_data():
         'pwd': password,  # Пароль
         'wp-submit': 'Войти',
         'redirect_to': 'https://paperpaper.io/profile/',  # URL, куда перейти после успешного входа
-        #     'testcookie': '1'
+        'testcookie': '1'
     }
 
     # Создаем сессию, чтобы сохранять cookies
