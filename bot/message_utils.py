@@ -100,8 +100,12 @@ def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=100
     days_until_next_17th_value = days_until_next_17th()
 
     datetime_now = datetime.now().astimezone(pytz.timezone('Europe/Moscow'))
-    text = (f"Осталось месячного трафика VPN, по состоянию на `{datetime_now.strftime('%H:%M:%S %Y-%m-%d')}` по Москве:"
-            f"\nmessage: `{profile_data_message}`,\ndata: `{profile_data_data}`.\n\nСредний оставшийся трафик до обнуления: {amount/(days_until_next_17th_value+1):.2f} ГБ/день\nДо обнуления трафика осталось {days_until_next_17th_value+1} дней.")
+    text = (f"Осталось месячного трафика VPN, по состоянию на `{datetime_now.strftime('%H:%M:%S %Y-%m-%d')}` по Москве:\n"
+            f"message: `{profile_data_message}`,\n"
+            f"data: `{profile_data_data}`.\n"
+            f"\n"
+            f"До обнуления трафика осталось {days_until_next_17th_value+1} дней\n"
+            f"Средний оставшийся трафик до обнуления: {amount/(days_until_next_17th_value+1):.2f} ГБ/день")
 
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(telebot.types.InlineKeyboardButton(text=text_markup, url='https://t.me/ProSkidkuru'))
