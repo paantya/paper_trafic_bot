@@ -70,7 +70,7 @@ def upd_message(chat_id, profile_data_message, profile_data_data, base_traffic=1
         path: Путь к файлу для сохранения данных сообщения.
     """
     path = path or f'./data/{chat_id}/messages.json'
-    if not Path('urls.json').is_file():
+    if not Path(path).is_file():
         message_json = bot_send_message(chat_id=chat_id, text='Сообщение для статистики', disable_notification=True,
                                         pin=True).json
         save_file(data=message_json, file_path=path)
