@@ -9,7 +9,7 @@ from data_utils.file_utils import save_file
 # Получение данных окружения
 username = os.getenv('PAPERPAPER__USERNAME')
 password = os.getenv('PAPERPAPER__PASSWORD')
-user_id = os.getenv('PAPERPAPER__USER_ID', '68536')
+user_id = os.getenv('PAPERPAPER__USER_ID')
 
 
 def get_paper_vpn_data():
