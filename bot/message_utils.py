@@ -89,7 +89,7 @@ def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=100
         base_traffic: Базовое значение трафика для расчета.
     """
     datetime_now = datetime.now().astimezone(pytz.timezone('Europe/Moscow'))
-    text = (f"Осталось месячного трафика VPN, по состоянию на `{datetime_now.strftime('%H:%M:%S %Y-%m-%d')}`:"
+    text = (f"Осталось месячного трафика VPN, по состоянию на `{datetime_now.strftime('%H:%M:%S %Y-%m-%d')}` по Москве:"
             f" {profile_data_message}\n{profile_data_data}")
 
     if 'amount' in profile_data_data and profile_data_data['amount']:

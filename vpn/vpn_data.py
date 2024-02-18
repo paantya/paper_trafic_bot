@@ -9,10 +9,7 @@ from data_utils.file_utils import save_file
 # Получение данных окружения
 username = os.getenv('PAPERPAPER__USERNAME')
 password = os.getenv('PAPERPAPER__PASSWORD')
-user_id = os.getenv('PAPERPAPER__USER_ID')
-print(f"username: {username}")
-print(f"password: {password}")
-print(f"user_id: {user_id}")
+user_id = os.getenv('PAPERPAPER__USER_ID', '68536')
 
 
 def get_paper_vpn_data():
@@ -22,8 +19,9 @@ def get_paper_vpn_data():
     Возвращает кортеж, содержащий статус операции, сообщение от сервера и данные о трафике.
     """
 
-
-    print(username)
+    print(f"username: {username}")
+    print(f"password: {password}")
+    print(f"user_id: {user_id}")
     # Указываем URL для входа
     login_url = 'https://paperpaper.io/wp-login.php'
 
@@ -33,7 +31,7 @@ def get_paper_vpn_data():
         'pwd': password,  # Пароль
         'wp-submit': 'Войти',
         'redirect_to': 'https://paperpaper.io/profile/',  # URL, куда перейти после успешного входа
-        'testcookie': '1'
+        # 'testcookie': '1'
     }
 
     # Создаем сессию, чтобы сохранять cookies
