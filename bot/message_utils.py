@@ -90,10 +90,10 @@ def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=100
     """
     datetime_now = datetime.now().astimezone(pytz.timezone('Europe/Moscow'))
     text = (f"Осталось месячного трафика VPN, по состоянию на `{datetime_now.strftime('%H:%M:%S %Y-%m-%d')}` по Москве:"
-            f"\nmessage: `{profile_data_message}`\ndata:`{profile_data_data}`")
+            f"\nmessage: `{profile_data_message}`,\ndata: `{profile_data_data}`.")
 
     if 'amount' in profile_data_data and profile_data_data['amount']:
-        text_markup = f"{(int(profile_data_data['amount']) / base_traffic * 1000)/10} [%]"
+        text_markup = f"{(int(profile_data_data['amount']) / base_traffic * 1000)/10} [%] ({int(profile_data_data['amount'])} ГБ)"
     else:
         text_markup = f"? [%]"
     markup = telebot.types.InlineKeyboardMarkup()
