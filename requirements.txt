@@ -1,4 +1,1 @@
 pyTelegramBotAPI==4.8.0
-requests
-pathlib
-pytz
