@@ -12,6 +12,7 @@ def main():
     """
     is_get_ok, profile_data_message, profile_data_data = get_paper_vpn_data()
 
+    print(f"chat_id: {chat_id}")
     if is_get_ok:
         save_vpn_data(chat_id, profile_data_message, profile_data_data)
         upd_message(chat_id, profile_data_message, profile_data_data, base_traffic=1000)
