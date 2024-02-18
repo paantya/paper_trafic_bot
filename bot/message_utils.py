@@ -100,7 +100,7 @@ def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=100
     days_until_next_17th_value = days_until_next_17th()
 
     datetime_now = datetime.now().astimezone(pytz.timezone('Europe/Moscow'))
-    text = (f"`{datetime_now.strftime('%H:%M %Y-%m-%d')}` по Москве, осталось месячного трафика VPN:\n"
+    text = (f"На `{datetime_now.strftime('%H:%M %Y-%m-%d')}` по Москве, осталось месячного трафика VPN:\n"
             f"message: `{profile_data_message}`,\n"
             f"data: `{profile_data_data}`.\n"
             f"\n"
