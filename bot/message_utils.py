@@ -105,7 +105,7 @@ def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=100
             f"data: `{profile_data_data}`.\n"
             f"\n"
             f"До обнуления трафика осталось {days_until_next_17th_value+1} дней\n"
-            f"Средний оставшийся трафик до обнуления: {amount/(days_until_next_17th_value+1):.2f} ГБ/день")
+            f"Средний оставшийся трафик до обнуления: {amount/(days_until_next_17th_value+1):.1f} ГБ/день")
 
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(telebot.types.InlineKeyboardButton(text=text_markup, url='https://t.me/ProSkidkuru'))
