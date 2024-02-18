@@ -1,3 +1,9 @@
 docker stop $(basename $(pwd))
 docker rm $(basename $(pwd))
-docker run  --restart always -v $(pwd):$(pwd) --name $(basename $(pwd)) python:3.6-slim /bin/sh -c "/usr/local/bin/python -m pip install --upgrade pip; cd $(pwd); pip3 install -r ./requirements.txt; pip3 cache purge; python3 $(pwd)/run.py 2> w.err"
+docker run --restart always -v $(pwd):/app --name $(basename $(pwd)) \
+          -e PAPERPAPER__USERNAME="$PAPERPAPER__USERNAME" \
+         -e PAPERPAPER__PASSWORD="$PAPERPAPER__PASSWORD" \
+         -e PAPERPAPER__USER_ID="$PAPERPAPER__USER_ID" \
+         -e PAPERPAPER__CHAT_ID="$PAPERPAPER__CHAT_ID" \
+         -e PAPERPAPER__TELEGRAM_TOKEN="$PAPERPAPER__TELEGRAM_TOKEN" \
+         python:3.6-slim /bin/sh -c "cd /app; pip3 install -r /app/requirements.txt && python3 /app/run.py 2> w.err"
