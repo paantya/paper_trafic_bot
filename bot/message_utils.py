@@ -59,7 +59,7 @@ def bot_send_message(
     return message
 
 
-def upd_message(chat_id, profile_data_message, profile_data_data, base_traffic=1000, path=None):
+def upd_message(chat_id, profile_data_message, profile_data_data, profile_data_vpn, base_traffic=1000, path=None):
     """
     Обновляет сообщение с информацией о VPN трафике.
 
@@ -76,10 +76,10 @@ def upd_message(chat_id, profile_data_message, profile_data_data, base_traffic=1
                                         pin=True).json
         save_file(data=message_json, file_path=path)
     msg_json = load_file(file_path=path)
-    upd_info(msg_json, profile_data_message, profile_data_data, base_traffic)
+    upd_info(msg_json, profile_data_message, profile_data_data, profile_data_vpn, base_traffic)
 
 
-def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=1000):
+def upd_info(msg_json, profile_data_message, profile_data_data, profile_data_vpn, base_traffic=1000):
     """
     Обновляет информацию в сообщении.
 
@@ -96,16 +96,44 @@ def upd_info(msg_json, profile_data_message, profile_data_data, base_traffic=100
         amount = -1
         text_markup = f"? [%]"
 
+    # Функция для форматирования Unix timestamp
+    def format_timestamp(ts):
+        return datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') if ts else 'Не указано'
 
-    days_until_next_17th_value = days_until_next_17th()
+    # Получаем данные из словаря
+    data = profile_data_vpn['data']
+    id = data['id']
+    sum = data['sum']
+    currencySymbol = data['currencySymbol']
+    nextTransactionDate = format_timestamp(data['nextTransactionDate'])
+    startDate = format_timestamp(data['startDate'])
+    startDate_day = datetime.utcfromtimestamp(data['startDate']).day
+    endDate = format_timestamp(data['endDate'])
+    gate = data['gate']
+    regionCode = data['regionCode']
+    monthNumPeriod = data['monthNumPeriod']
+
+    days_until_next_17th_value = days_until_next_17th(n_day = startDate_day)
 
     datetime_now = datetime.now().astimezone(pytz.timezone('Europe/Moscow'))
     text = (f"На `{datetime_now.strftime('%H:%M %Y-%m-%d')}` по Москве, осталось месячного трафика VPN:\n"
+            f"\n"
+            f"*Tехнические данные*:\n"
             f"message: `{profile_data_message}`,\n"
             f"data: `{profile_data_data}`.\n"
+            f"user vpn profile: `{profile_data_vpn}`.\n"
             f"\n"
-            f"До обнуления трафика осталось {days_until_next_17th_value+1} дней\n"
-            f"Доступный средний дневной трафик: {amount/(days_until_next_17th_value+1):.1f} ГБ/день")
+            f"*Общие данные*:\n"
+            f"Сумма: `{sum}` {currencySymbol}\n"
+            f"Дата начала: `{startDate}`\n"
+            f"Дата окончания: `{endDate}`\n"
+            f"Период подписки (месяцев): `{monthNumPeriod}`\n"
+            f"Дата следующей транзакции: `{nextTransactionDate}`\n"
+            f"\n"
+            f"*Важные данные*:\n"
+            f"Осталось: `{amount}` ГБ\n"
+            f"Дней до обнуления месячного трафика: `{days_until_next_17th_value+1}`\n"
+            f"Доступный средний дневной трафик: `{amount/(days_until_next_17th_value+1):.1f}` ГБ/день")
 
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(telebot.types.InlineKeyboardButton(text=text_markup, url='https://t.me/ProSkidkuru'))

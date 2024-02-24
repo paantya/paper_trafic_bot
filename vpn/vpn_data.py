@@ -12,7 +12,7 @@ password = os.getenv('PAPERPAPER__PASSWORD')
 user_id = os.getenv('PAPERPAPER__USER_ID')
 
 
-def days_until_next_17th():
+def days_until_next_17th(n_day = 17):
     # Текущая дата
     current_date = datetime.now()
 
@@ -21,11 +21,11 @@ def days_until_next_17th():
     current_year = current_date.year
 
     # Находим дату следующего 17 числа
-    next_17th = datetime(current_year, current_month, 17)
+    next_17th = datetime(current_year, current_month, n_day)
 
     # Если текущая дата находится после 17 числа текущего месяца,
     # то прибавляем один месяц к месяцу следующей 17 числа
-    if current_date.day >= 17:
+    if current_date.day >= n_day:
         next_17th = next_17th.replace(month=current_month + 1)
         # Проверяем, что новый месяц не выходит за пределы года
         if next_17th.month > 12:
@@ -68,7 +68,7 @@ def get_paper_vpn_data():
     # Проверяем успешность входа по URL перенаправления или содержимому страницы
     if response.status_code == 200 and '/profile/' in response.url:
         print("Успешный вход")
-        # Получаем содержимое страницы профиля
+        # Получаем содержимое страницы профиля trafica
         profile_response = session.get(f'https://paperpaper.io/api/vpn/traffic/remaining/{user_id}')
 
         # Декодируем JSON-ответ в словарь Python
@@ -82,10 +82,19 @@ def get_paper_vpn_data():
         print("Сообщение:", profile_data__message)
         print("Количество:", profile_data__amount)
 
-        return True, profile_data__message, profile_data__data
+        # Получаем содержимое страницы профиля vpn
+        profile_response = session.get(f'https://paperpaper.io/api/vpn/{user_id}')
+
+        # Декодируем JSON-ответ в словарь Python
+        profile_data_vpn = profile_response.json()
+
+        # Печатаем полученные данные
+        print("profile_data:", profile_data_vpn)
+
+        return True, profile_data__message, profile_data__data, profile_data_vpn
     else:
         print("Ошибка входа")
-        return False, None, None
+        return False, None, None, None
 
 
 def save_vpn_data(chat_id, profile_data_message, profile_data_data):
