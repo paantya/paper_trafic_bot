@@ -72,11 +72,11 @@ def get_paper_vpn_data():
         profile_response = session.get(f'https://paperpaper.io/api/vpn/traffic/remaining/{user_id}')
 
         # Декодируем JSON-ответ в словарь Python
-        profile_data = profile_response.json()
+        profile_data_traffic = profile_response.json()
 
-        profile_data__message = profile_data['message']
-        profile_data__data = profile_data['data']
-        profile_data__amount = profile_data__data['amount']
+        profile_data__message = profile_data_traffic.get('message', None)
+        profile_data__data = profile_data_traffic.get('data', None)
+        profile_data__amount = profile_data__data.get('amount', None)
 
         # Печатаем полученные данные
         print("Сообщение:", profile_data__message)
@@ -91,13 +91,13 @@ def get_paper_vpn_data():
         # Печатаем полученные данные
         print("profile_data:", profile_data_vpn)
 
-        return True, profile_data__message, profile_data__data, profile_data_vpn
+        return True, profile_data_traffic, profile_data_vpn
     else:
         print("Ошибка входа")
-        return False, None, None, None
+        return False, None, None
 
 
-def save_vpn_data(chat_id, profile_data_message, profile_data_data):
+def save_vpn_data(chat_id, profile_data_traffic):
     """
     Сохраняет данные о VPN трафике в файл.
 
@@ -107,6 +107,8 @@ def save_vpn_data(chat_id, profile_data_message, profile_data_data):
         profile_data_data (dict): Данные о трафике.
     """
     now = datetime.now()
+    profile_data_message = profile_data_traffic.get('message', None)
+    profile_data_data = profile_data_traffic.get('data', None)
     file_path = f"./data/{chat_id}/{now.strftime('%Y/%m/%d/%H.txt')}"
     data_to_save = {
         'profile_data_message': profile_data_message,

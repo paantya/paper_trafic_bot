@@ -10,12 +10,12 @@ def main():
     """
     Основная функция для получения данных о VPN трафике и обновления сообщений.
     """
-    is_get_ok, profile_data_message, profile_data_data, profile_data_vpn = get_paper_vpn_data()
+    is_get_ok, profile_data_traffic, profile_data_vpn = get_paper_vpn_data()
 
     print(f"chat_id: {chat_id}")
     if is_get_ok:
-        save_vpn_data(chat_id, profile_data_message, profile_data_data)
-        upd_message(chat_id, profile_data_message, profile_data_data, profile_data_vpn, base_traffic=1000)
+        save_vpn_data(chat_id, profile_data_traffic)
+        upd_message(chat_id, profile_data_traffic, profile_data_vpn, base_traffic=1000)
     else:
         print("ERROR!!!")
 

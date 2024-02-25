@@ -59,7 +59,7 @@ def bot_send_message(
     return message
 
 
-def upd_message(chat_id, profile_data_message, profile_data_data, profile_data_vpn, base_traffic=1000, path=None):
+def upd_message(chat_id, profile_data_traffic, profile_data_vpn, base_traffic=1000, path=None):
     """
     Обновляет сообщение с информацией о VPN трафике.
 
@@ -76,10 +76,10 @@ def upd_message(chat_id, profile_data_message, profile_data_data, profile_data_v
                                         pin=True).json
         save_file(data=message_json, file_path=path)
     msg_json = load_file(file_path=path)
-    upd_info(msg_json, profile_data_message, profile_data_data, profile_data_vpn, base_traffic)
+    upd_info(msg_json, profile_data_traffic, profile_data_vpn, base_traffic)
 
 
-def upd_info(msg_json, profile_data_message, profile_data_data, profile_data_vpn, base_traffic=1000):
+def upd_info(msg_json, profile_data_traffic, profile_data_vpn, base_traffic=1000):
     """
     Обновляет информацию в сообщении.
 
@@ -89,6 +89,11 @@ def upd_info(msg_json, profile_data_message, profile_data_data, profile_data_vpn
         profile_data_data: Данные о трафике.
         base_traffic: Базовое значение трафика для расчета.
     """
+
+
+    profile_data_message = profile_data_traffic.get('message', None)
+    profile_data_data = profile_data_traffic.get('data', None)
+
     if 'amount' in profile_data_data and profile_data_data['amount']:
         amount = int(profile_data_data['amount'])
         text_markup = f"{(int(profile_data_data['amount']) / base_traffic * 1000)/10} [%] ({int(profile_data_data['amount'])} ГБ)"
