@@ -134,7 +134,7 @@ def upd_info(msg_json, profile_data_traffic, profile_data_vpn, base_traffic=1000
             f"Период подписки (месяцев): `{monthNumPeriod}`\n"
             f"Дата следующей транзакции: `{nextTransactionDate}`\n"
             f"\n"
-            f"*Важные данные*:\n"
+            f"*Данные о траффике*:\n"
             f"Осталось: `{amount}` ГБ\n"
             f"Дней до обнуления месячного трафика: `{days_until_next_17th_value+1}`\n"
             f"Доступный средний дневной трафик: `{amount/(days_until_next_17th_value+1):.1f}` ГБ/день")
